@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+  </head>
+  <body>
+    
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+    
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">불사빌리지</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="#">현재 상황</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="group.html">내 그룹</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">내 친구</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+    
+    <div class="alert alert-danger" role="alert">
+        지금 포스텍구 국제관동 학생회관아파트 공원 입구에서 73세노인 김포텍 님이 쓰러졌습니다!! 도와주세요!!
+    </div>
+    <div class="alert alert-primary" role="alert">
+        김도움 님이 김포텍분을 위해 출발하셨습니다!!
+    </div>
+    <div class="alert alert-primary" role="alert">
+        김헬피 님이 김포텍분을 위해 119에 신고하셨습니다!!
+    </div>
+    <div id="map" style="width:100%;height:800px;"></div>
+	<script type="text/javascript" src="http://dapi.kakao.com/v2/maps/sdk.js?appkey=e42d4fecfe5e25458f0ae24ac7246c5c"></script>
+	<script>
+
+        var container = document.getElementById('map');
+		var options = {
+			center: new kakao.maps.LatLng(36.014267882822466, 129.32311054712824),
+			level: 3
+		};
+
+		var map = new kakao.maps.Map(container, options);
+        
+        var positions = [
+    {
+        title: '사고지점', 
+        latlng: new kakao.maps.LatLng(36.015860228454294, 129.3260322525012),
+        image: "./accident.png",
+        state: '73세김포텍'
+    },
+    {
+        title: '친구 김도움', 
+        latlng: new kakao.maps.LatLng(36.01235517157807, 129.326293100799),
+        image: "./walk.png",
+        state: '가는중'
+    },
+    {
+        title: '친구 김헬피', 
+        latlng: new kakao.maps.LatLng(36.01096156797066, 129.3227440434135),
+        image: "./walk.png",
+        state: '가는중'
+    },
+    {
+        title: '구급차',
+        latlng: new kakao.maps.LatLng(36.008369399867284, 129.32570733404748),
+        image: "./ambulance.png",
+        state: '가는중(포항성모병원)'
+    },
+    {
+        title: '협력병원',
+        latlng: new kakao.maps.LatLng(36.015921619212754, 129.33990780803936),
+        image: "./hospital.png",
+        state: '포항성모병원'
+    }
+    
+];
+
+// 마커 이미지의 이미지 주소입니다
+    
+for (var i = 0; i < positions.length; i ++) {
+    
+    // 마커 이미지의 이미지 크기 입니다
+    var imageSize = new kakao.maps.Size(35, 35); 
+    
+    // 마커 이미지를 생성합니다    
+    var markerImage = new kakao.maps.MarkerImage(positions[i].image, imageSize); 
+    
+    // 마커를 생성합니다
+    var marker = new kakao.maps.Marker({
+        map: map, // 마커를 표시할 지도
+        position: positions[i].latlng, // 마커를 표시할 위치
+        title : positions[i].title, // 마커의 타이틀, 마커에 마우스를 올리면 타이틀이 표시됩니다
+        image : markerImage // 마커 이미지 
+    });
+    marker.setMap(map);
+
+    var iwContent = '<div style="padding:5px;">' + positions[i].title +'<br><a>' + positions[i].state +'</a> </div>', // 인포윈도우에 표출될 내용으로 HTML 문자열이나 document element가 가능합니다
+    iwPosition = positions[i].latlng //인포윈도우 표시 위치입니다
+
+// 인포윈도우를 생성합니다
+    var infowindow = new kakao.maps.InfoWindow({
+    position : iwPosition, 
+    content : iwContent 
+    });
+
+    infowindow.open(map, marker); 
+}
+	</script>
+  </body>
+</html>
